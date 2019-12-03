@@ -1,2 +1,0 @@
-# Maxim-Shcherbachenko
-I ♥ KPI 
