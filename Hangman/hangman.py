@@ -7,7 +7,7 @@
 
 import random
 import string
-
+import math
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -90,7 +90,7 @@ def hangman(secret_word):
             temp = get_guessed_word(secret_word, a)
             print("-" * 26)
         if is_word_guessed(secret_word, a) == True:
-            print("Congratulations, you won! Your total score for this game is:", guesses_ramainings*len(set(secret_word)))
+            print("Congratulations, you won! Your total score for this game is:", guesses_ramainings*len(secret_word))
             break
         elif guesses_ramainings == 0:
             print("You lose:(\n Secret word:", secret_word)
@@ -124,18 +124,23 @@ def hangman_with_hints(secret_word):
     a = []
     temp = "_ " * len(secret_word)
     while guesses_ramainings > 0:
-        print("You have", warnings_remainings, "warnings left.")
-        print("You have", guesses_ramainings, "guesses left.")
+        if guesses_ramainings == math.inf:
+            print("You have infinity guesses left.")
+        else:
+            print("You have", warnings_remainings, "warnings left.")
+            print("You have", guesses_ramainings, "guesses left.")
         print("Available letters:", get_available_letters(a))
         letters_guessed = input("Please guess a letter:\n").lower()
         a.append(letters_guessed)
         print(temp)
         if letters_guessed == "*" and temp.replace(" ", "") != len(secret_word)*"_":
             print(show_possible_matches(temp.replace(" ", "")))
+            guesses_ramainings = math.inf
             continue
         elif letters_guessed == "*":
             print("You cant use hints for now.")
             warnings_remainings -= 1
+            a.remove("*")
             continue
         if warnings_remainings > 0:
             if not letters_guessed.isalpha() or len(letters_guessed) > 1:
@@ -160,14 +165,16 @@ def hangman_with_hints(secret_word):
             temp = get_guessed_word(secret_word, a)
             print("-" * 26)
         if is_word_guessed(secret_word, a) == True:
-            print("Congratulations, you won! Your total score for this game is:", guesses_ramainings * len(set(secret_word)))
+            if guesses_ramainings == math.inf:
+                print("Congratulations, you won! But you used a hint for this game, that is why you have no score:(")
+            else:
+                print("Congratulations, you won! Your total score for this game is:", guesses_ramainings * len(set(secret_word)))
             break
         elif guesses_ramainings == 0:
             print("You lose:(\n Secret word:", secret_word)
         else:
             continue
         print()
-
 
 q = ""
 while q != "q":
