@@ -90,7 +90,7 @@ def hangman(secret_word):
             temp = get_guessed_word(secret_word, a)
             print("-" * 26)
         if is_word_guessed(secret_word, a) == True:
-            print("Congratulations, you won! Your total score for this game is:", guesses_ramainings*len(secret_word))
+            print("Congratulations, you won! Your total score for this game is:", guesses_ramainings*len(set(secret_word)))
             break
         elif guesses_ramainings == 0:
             print("You lose:(\n Secret word:", secret_word)
@@ -160,7 +160,7 @@ def hangman_with_hints(secret_word):
             temp = get_guessed_word(secret_word, a)
             print("-" * 26)
         if is_word_guessed(secret_word, a) == True:
-            print("Congratulations, you won! Your total score for this game is:", guesses_ramainings * len(secret_word))
+            print("Congratulations, you won! Your total score for this game is:", guesses_ramainings * len(set(secret_word)))
             break
         elif guesses_ramainings == 0:
             print("You lose:(\n Secret word:", secret_word)
